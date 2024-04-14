@@ -11,6 +11,8 @@ use tiny_os::println;
 // name '_start' by default.
 #[no_mangle] // Don't mangle the name of this function.
 pub extern "C" fn _start() -> ! {
+    tiny_os::init();
+
     println!("Hello World{}", "!");
 
     #[cfg(test)]
@@ -31,4 +33,9 @@ fn panic(info: &PanicInfo) -> ! {
 #[panic_handler]
 fn panic(info: &PanicInfo) -> ! {
     tiny_os::test_panic_handler(info)
+}
+
+#[test_case]
+fn test_trivial_assertion() {
+    assert_eq!(1, 1);
 }
